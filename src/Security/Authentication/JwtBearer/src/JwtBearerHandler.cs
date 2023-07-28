@@ -81,9 +81,10 @@ public class JwtBearerHandler : AuthenticationHandler<JwtBearerOptions>
                     return AuthenticateResult.NoResult();
                 }
 
-                if (authorization.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                var authorizationSchemePrefix = $"{Scheme.Name} ";
+                if (authorization.StartsWith(authorizationSchemePrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    token = authorization.Substring("Bearer ".Length).Trim();
+                    token = authorization.Substring(authorizationSchemePrefix.Length).Trim();
                 }
 
                 // If no token found, no further work possible
